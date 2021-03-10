@@ -18,8 +18,30 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-
+@ExtendWith(MockitoExtension.class)
 class EventTest {
 
+    @Mock
+    EventNotificationServiceImpl eventNotificationService;
+
+
+    @Test
+    @DisplayName("the list shouldn't appear empty when I add an assistant")
+    void EventConstructorSetterAndGetter() {
+        Event evento = new Event(1l,"developer",TECH,eventNotificationService);
+        List speakers = new ArrayList<Speaker>();
+        Speaker speaker = new Speaker(1l,"miguel","developer");
+        speakers.add(speaker);
+        evento.setId(2l);
+        evento.setTitle("developer");
+        evento.setType(TECH);
+        evento.setSpeakers(speakers);
+
+        assertEquals(evento.getId(), 2l);
+        assertEquals(evento.getTitle(), "developer");
+        assertEquals(evento.getType(), TECH);
+
+        assertTrue(evento !=null);
+    }
 
 }
