@@ -61,4 +61,19 @@ class EventTest {
 
     }
 
+    @Test
+    @DisplayName("the list should have a second assistant when I add it")
+    void addAttendee2() {
+
+        Event evento = new Event();
+        Attendee asistente = new Attendee(1l,"Miguel","miguel@email.com");
+        Attendee asistente2 = new Attendee(2l,"Manuel","manuel@email.com");
+
+        evento.addAttendee(asistente);
+        evento.addAttendee(asistente2);
+
+        assertEquals(asistente2,evento.getAttendees().get(1));
+
+    }
+
 }
