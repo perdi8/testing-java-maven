@@ -136,4 +136,21 @@ class EventTest {
 
     }
 
+    @Test
+    @DisplayName("it shouldn't show attendees when I delete the entire list")
+    void removeAttendees() {
+
+        Event evento = new Event();
+        Attendee asistente = new Attendee(1l,"Miguel","miguel@email.com");
+        Attendee asistente2 = new Attendee(2l,"Manuel","manuel@email.com");
+        List<Attendee> asistentes = new ArrayList<>();
+
+        asistentes.add(asistente);
+        asistentes.add(asistente2);
+        evento.removeAttendees(asistentes);
+
+        assertTrue(evento.getAttendees().size()==0);
+
+    }
+
 }
