@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.demo.EventType.TECH;
@@ -117,6 +118,21 @@ class EventTest {
         evento.addAttendees(asistentes);
 
         assertTrue(evento.getAttendees().get(0)==null);
+
+    }
+
+    @Test
+    @DisplayName("it shouldn't show a attendee when i remove it, it should return an empty list")
+    void removeAttendee() {
+
+        Event evento = new Event();
+        Attendee asistente = new Attendee(1l,"Miguel","miguel@email.com");
+
+        evento.addAttendee(asistente);
+        evento.removeAttendee(asistente);
+
+        assertTrue(evento.getAttendees().size()==0);
+        assertEquals( new ArrayList<>() , evento.getAttendees());
 
     }
 
