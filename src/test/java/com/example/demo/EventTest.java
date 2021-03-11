@@ -106,4 +106,18 @@ class EventTest {
 
     }
 
+    @Test
+    @DisplayName("it should show null when I add a null attendee")
+    void addAttendeesWithNull() {
+
+        Event evento = new Event();
+        List<Attendee> asistentes = new ArrayList<>();
+
+        asistentes.add(null);
+        evento.addAttendees(asistentes);
+
+        assertTrue(evento.getAttendees().get(0)==null);
+
+    }
+
 }
