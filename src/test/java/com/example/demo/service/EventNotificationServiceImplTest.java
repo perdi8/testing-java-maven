@@ -25,6 +25,8 @@ import static org.mockito.Mockito.verify;
 class EventNotificationServiceImplTest {
 
     private static final String MSG_ANNOUNCE = "The next big event is coming!";
+    private static final String MSG_CONFIRM = "Dear Attendee, your subscription to the event has been confirmed successfully.";
+
 
     @Mock
     EventNotificationService eventNotificationService;
@@ -55,6 +57,32 @@ class EventNotificationServiceImplTest {
 
     }
 
+    @Test
+    @DisplayName("when I call the confirm attendance method and pass an event and attendance to it, it should notify all attendees with a message and the event, I verify that the class is called once")
+    void confirmAttendance() {
+
+        Event event = new Event(1l,"DeveloperCongress", EventType.TECH,eventNotificationService);
+        Attendee attendee1 = new Attendee(1l,"Miguel","miguel@email.com");
+        Attendee attendee2 = new Attendee(2l,"Manuel","manuel@email.com");
+
+        List<Attendee> attendees = new ArrayList<>();
+
+        attendees.add(attendee1);
+        attendees.add(attendee2);
+
+        event.addAttendees(attendees);
 
 
+        eventNotificationService.confirmAttendance(event, attendee1);
+        eventNotificationService.confirmAttendance(event, attendee2);
+
+        eventNotificationServiceImpl.confirmAttendance(event, attendee1);
+        eventNotificationServiceImpl.confirmAttendance(event, attendee2);
+
+        verify(eventNotificationService).confirmAttendance(event,attendee1);
+        verify(eventNotificationService).confirmAttendance(event,attendee2);
+
+        assertEquals(MSG_CONFIRM, attendee1.getNotifications().get(0).getMessage());
+
+    }
 }
