@@ -76,4 +76,15 @@ class EventTest {
 
     }
 
+    @Test
+    @DisplayName("the list shouldn't contain attendee if I don't add it")
+    void notAddAttendee() {
+
+        Event evento = new Event();
+        Attendee asistente = new Attendee();
+
+        assertTrue(!evento.getAttendees().contains(asistente));
+
+    }
+
 }
