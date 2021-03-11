@@ -44,4 +44,21 @@ class EventTest {
         assertTrue(evento !=null);
     }
 
+    @Test
+    @DisplayName("the list shouldn't appear empty and should have the same nickname when I add an assistant")
+    void addAttendee() {
+
+        Event evento = new Event();
+        Attendee asistente = new Attendee();
+
+        asistente.setId(1l);
+        asistente.setNickname("Carola");
+        asistente.setEmail("carola@email.com");
+        evento.addAttendee(asistente);
+
+        assertTrue(evento.getAttendees().size()==1);
+        assertEquals("Carola", evento.getAttendees().get(0).getNickname());
+
+    }
+
 }
