@@ -153,4 +153,15 @@ class EventTest {
 
     }
 
+    @Test
+    @DisplayName("when an event emits a notification, it is verified that the method: announce, of the interface class is called once")
+    void notifyAssistants() {
+
+        Event evento = new Event(1l,"developer", TECH, eventNotificationService);
+        evento.notifyAssistants();
+
+        verify(eventNotificationService, times(1)).announce(evento);
+
+    }
+
 }
