@@ -87,4 +87,23 @@ class EventTest {
 
     }
 
+    @Test
+    @DisplayName("I should add an attendee to the attendee list")
+    void addAttendees() {
+
+        Event evento = new Event();
+        Attendee asistente = new Attendee(1l,"Miguel","miguel@email.com");
+        Attendee asistente2 = new Attendee(2l,"Cristina","cristina@email.com");
+        List<Attendee> asistentes = new ArrayList<>();
+
+        asistentes.add(asistente);
+        asistentes.add(asistente2);
+        evento.addAttendees(asistentes);
+
+        assertTrue(evento.getAttendees().get(0)!=null);
+        assertTrue(evento.getAttendees().get(1)!=null);
+        assertTrue(asistentes.size()==2);
+
+    }
+
 }
