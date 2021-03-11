@@ -185,4 +185,18 @@ class EventTest {
 
     }
 
+    @Test
+    @DisplayName("It shouldn't show a speaker when I remove it from the list")
+    void removeSpeaker() {
+
+        Event evento = new Event();
+        Speaker speaker = new Speaker(1l,"miguel","developer");
+
+        evento.addSpeaker(speaker);
+        assertTrue(evento.getSpeakers().size()==1);
+
+        evento.removeSpeaker(speaker);
+        assertFalse(evento.getSpeakers().size()!=0);
+    }
+
 }
