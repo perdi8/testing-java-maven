@@ -164,4 +164,25 @@ class EventTest {
 
     }
 
+    @Test
+    @DisplayName("It should show two speakers when you add them and I check that they are different and that the list is not empty")
+    void addSpeaker() {
+
+        Speaker speaker = new Speaker();
+        Speaker speaker2 = new Speaker(2l,"Cristina","developer");
+        Event evento = new Event();
+
+        speaker.setId(1l);
+        speaker.setName("Carola");
+        speaker.setExpertise("developer");
+
+        evento.addSpeaker(speaker);
+        evento.addSpeaker(speaker2);
+        speaker.equals(speaker2);
+
+        assertFalse(speaker.getId() == speaker2.getId());
+        assertFalse(evento.getSpeakers().isEmpty());
+
+    }
+
 }
