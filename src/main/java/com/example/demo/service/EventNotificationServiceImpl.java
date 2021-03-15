@@ -19,7 +19,6 @@ public class EventNotificationServiceImpl implements EventNotificationService {
             Notification announce = new Notification(MSG_ANNOUNCE);
             attendee.getNotifications().add(announce);
         }
-
         return;
     }
 
