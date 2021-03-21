@@ -65,4 +65,13 @@ public class Attendee {
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        return "Attendee{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", notifications=" + notifications +
+                '}';
+    }
 }

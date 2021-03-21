@@ -20,4 +20,10 @@ public class Notification {
         this.message = message;
     }
 
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "message='" + message + '\'' +
+                '}';
+    }
 }

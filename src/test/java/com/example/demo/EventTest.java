@@ -3,10 +3,12 @@ package com.example.demo;
 import com.example.demo.Attendee;
 import com.example.demo.Event;
 import com.example.demo.Speaker;
+import com.example.demo.service.EventNotificationService;
 import com.example.demo.service.EventNotificationServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,42 +25,42 @@ import static org.mockito.Mockito.verify;
 class EventTest {
 
     @Mock
-    EventNotificationServiceImpl eventNotificationService;
+    EventNotificationService eventNotificationService;
 
 
     @Test
     @DisplayName("the list shouldn't appear empty when I add an assistant")
     void EventConstructorSetterAndGetter() {
-        Event evento = new Event(1l,"developer",TECH,eventNotificationService);
+        Event event = new Event(1l,"developer",TECH,eventNotificationService);
         List speakers = new ArrayList<Speaker>();
         Speaker speaker = new Speaker(1l,"miguel","developer");
         speakers.add(speaker);
-        evento.setId(2l);
-        evento.setTitle("developer");
-        evento.setType(TECH);
-        evento.setSpeakers(speakers);
+        event.setId(2l);
+        event.setTitle("developer");
+        event.setType(TECH);
+        event.setSpeakers(speakers);
 
-        assertEquals(evento.getId(), 2l);
-        assertEquals(evento.getTitle(), "developer");
-        assertEquals(evento.getType(), TECH);
+        assertEquals(event.getId(), 2l);
+        assertEquals(event.getTitle(), "developer");
+        assertEquals(event.getType(), TECH);
 
-        assertTrue(evento !=null);
+        assertTrue(event !=null);
     }
 
     @Test
     @DisplayName("the list shouldn't appear empty and should have the same nickname when I add an assistant")
     void addAttendee() {
 
-        Event evento = new Event();
-        Attendee asistente = new Attendee();
+        Event event = new Event();
+        Attendee attendee = new Attendee();
 
-        asistente.setId(1l);
-        asistente.setNickname("Carola");
-        asistente.setEmail("carola@email.com");
-        evento.addAttendee(asistente);
+        attendee.setId(1l);
+        attendee.setNickname("Carola");
+        attendee.setEmail("carola@email.com");
+        event.addAttendee(attendee);
 
-        assertTrue(evento.getAttendees().size()==1);
-        assertEquals("Carola", evento.getAttendees().get(0).getNickname());
+        assertTrue(event.getAttendees().size()==1);
+        assertEquals("Carola", event.getAttendees().get(0).getNickname());
 
     }
 
@@ -66,14 +68,14 @@ class EventTest {
     @DisplayName("the list should have a second assistant when I add it")
     void addAttendee2() {
 
-        Event evento = new Event();
-        Attendee asistente = new Attendee(1l,"Miguel","miguel@email.com");
-        Attendee asistente2 = new Attendee(2l,"Manuel","manuel@email.com");
+        Event event = new Event();
+        Attendee attendee = new Attendee(1l,"Miguel","miguel@email.com");
+        Attendee attendee2 = new Attendee(2l,"Manuel","manuel@email.com");
 
-        evento.addAttendee(asistente);
-        evento.addAttendee(asistente2);
+        event.addAttendee(attendee);
+        event.addAttendee(attendee2);
 
-        assertEquals(asistente2,evento.getAttendees().get(1));
+        assertEquals(attendee2,event.getAttendees().get(1));
 
     }
 
@@ -81,10 +83,10 @@ class EventTest {
     @DisplayName("the list shouldn't contain attendee if I don't add it")
     void notAddAttendee() {
 
-        Event evento = new Event();
-        Attendee asistente = new Attendee();
+        Event event = new Event();
+        Attendee attendee = new Attendee();
 
-        assertTrue(!evento.getAttendees().contains(asistente));
+        assertTrue(!event.getAttendees().contains(attendee));
 
     }
 
@@ -92,18 +94,18 @@ class EventTest {
     @DisplayName("I should add an attendee to the attendee list")
     void addAttendees() {
 
-        Event evento = new Event();
-        Attendee asistente = new Attendee(1l,"Miguel","miguel@email.com");
-        Attendee asistente2 = new Attendee(2l,"Cristina","cristina@email.com");
-        List<Attendee> asistentes = new ArrayList<>();
+        Event event = new Event();
+        Attendee attendee = new Attendee(1l,"Miguel","miguel@email.com");
+        Attendee attendee2 = new Attendee(2l,"Cristina","cristina@email.com");
+        List<Attendee> attendees = new ArrayList<>();
 
-        asistentes.add(asistente);
-        asistentes.add(asistente2);
-        evento.addAttendees(asistentes);
+        attendees.add(attendee);
+        attendees.add(attendee2);
+        event.addAttendees(attendees);
 
-        assertTrue(evento.getAttendees().get(0)!=null);
-        assertTrue(evento.getAttendees().get(1)!=null);
-        assertTrue(asistentes.size()==2);
+        assertTrue(event.getAttendees().get(0)!=null);
+        assertTrue(event.getAttendees().get(1)!=null);
+        assertTrue(attendees.size()==2);
 
     }
 
@@ -111,13 +113,13 @@ class EventTest {
     @DisplayName("it should show null when I add a null attendee")
     void addAttendeesWithNull() {
 
-        Event evento = new Event();
-        List<Attendee> asistentes = new ArrayList<>();
+        Event event = new Event();
+        List<Attendee> attendees = new ArrayList<>();
 
-        asistentes.add(null);
-        evento.addAttendees(asistentes);
+        attendees.add(null);
+        event.addAttendees(attendees);
 
-        assertTrue(evento.getAttendees().get(0)==null);
+        assertTrue(event.getAttendees().get(0)==null);
 
     }
 
@@ -125,14 +127,14 @@ class EventTest {
     @DisplayName("it shouldn't show a attendee when i remove it, it should return an empty list")
     void removeAttendee() {
 
-        Event evento = new Event();
-        Attendee asistente = new Attendee(1l,"Miguel","miguel@email.com");
+        Event event = new Event();
+        Attendee attendee = new Attendee(1l,"Miguel","miguel@email.com");
 
-        evento.addAttendee(asistente);
-        evento.removeAttendee(asistente);
+        event.addAttendee(attendee);
+        event.removeAttendee(attendee);
 
-        assertTrue(evento.getAttendees().size()==0);
-        assertEquals( new ArrayList<>() , evento.getAttendees());
+        assertTrue(event.getAttendees().size()==0);
+        assertEquals( new ArrayList<>() , event.getAttendees());
 
     }
 
@@ -140,16 +142,16 @@ class EventTest {
     @DisplayName("it shouldn't show attendees when I delete the entire list")
     void removeAttendees() {
 
-        Event evento = new Event();
-        Attendee asistente = new Attendee(1l,"Miguel","miguel@email.com");
-        Attendee asistente2 = new Attendee(2l,"Manuel","manuel@email.com");
-        List<Attendee> asistentes = new ArrayList<>();
+        Event event = new Event();
+        Attendee attendee = new Attendee(1l,"Miguel","miguel@email.com");
+        Attendee attendee2 = new Attendee(2l,"Manuel","manuel@email.com");
+        List<Attendee> attendees = new ArrayList<>();
 
-        asistentes.add(asistente);
-        asistentes.add(asistente2);
-        evento.removeAttendees(asistentes);
+        attendees.add(attendee);
+        attendees.add(attendee2);
+        event.removeAttendees(attendees);
 
-        assertTrue(evento.getAttendees().size()==0);
+        assertTrue(event.getAttendees().size()==0);
 
     }
 
@@ -157,10 +159,13 @@ class EventTest {
     @DisplayName("when an event emits a notification, it is verified that the method: announce, of the interface class is called once")
     void notifyAssistants() {
 
-        Event evento = new Event(1l,"developer", TECH, eventNotificationService);
-        evento.notifyAssistants();
+        Event event = new Event(1l,"developer", TECH, eventNotificationService);
+        ArgumentCaptor<Event> argumentCaptor = ArgumentCaptor.forClass(Event.class);
 
-        verify(eventNotificationService, times(1)).announce(evento);
+        event.notifyAssistants();
+
+        verify(eventNotificationService, times(1)).announce(argumentCaptor.capture());
+        assertEquals(event, argumentCaptor.getValue());
 
     }
 
@@ -170,18 +175,18 @@ class EventTest {
 
         Speaker speaker = new Speaker();
         Speaker speaker2 = new Speaker(2l,"Cristina","developer");
-        Event evento = new Event();
+        Event event = new Event();
 
         speaker.setId(1l);
         speaker.setName("Carola");
         speaker.setExpertise("developer");
 
-        evento.addSpeaker(speaker);
-        evento.addSpeaker(speaker2);
+        event.addSpeaker(speaker);
+        event.addSpeaker(speaker2);
         speaker.equals(speaker2);
 
         assertFalse(speaker.getId() == speaker2.getId());
-        assertFalse(evento.getSpeakers().isEmpty());
+        assertFalse(event.getSpeakers().isEmpty());
 
     }
 
@@ -189,14 +194,14 @@ class EventTest {
     @DisplayName("It shouldn't show a speaker when I remove it from the list")
     void removeSpeaker() {
 
-        Event evento = new Event();
+        Event event = new Event();
         Speaker speaker = new Speaker(1l,"miguel","developer");
 
-        evento.addSpeaker(speaker);
-        assertTrue(evento.getSpeakers().size()==1);
+        event.addSpeaker(speaker);
+        assertTrue(event.getSpeakers().size()==1);
 
-        evento.removeSpeaker(speaker);
-        assertFalse(evento.getSpeakers().size()!=0);
+        event.removeSpeaker(speaker);
+        assertFalse(event.getSpeakers().size()!=0);
     }
 
 }
